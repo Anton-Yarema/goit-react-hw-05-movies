@@ -1,0 +1,14 @@
+.imageCard {
+  width: 200px;
+  height: auto;
+}
+
+.movieContent {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.movieDescription {
+  margin-left: 10px;
+}

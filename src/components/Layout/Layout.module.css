@@ -2,6 +2,8 @@
   color: black;
 }
 
-.active {
-  color: red;
+.navList {
+  display: flex;
+  gap: 10px;
+  list-style: none;
 }

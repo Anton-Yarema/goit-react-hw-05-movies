@@ -1,6 +1,7 @@
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef, Suspense } from 'react';
 import axios from 'axios';
+import css from './MovieDetails.module.css';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -38,19 +39,29 @@ const MovieDetails = () => {
   }
 
   return (
-    <div>
-      <Link to={backLinkLocationRef.current}>Back</Link>
-      <div>
+     <div className={css.movieDetails}>
+      <Link to={backLinkLocationRef.current}>Go back</Link>
+      <div className={css.movieContent}>
         <img
+          className={css.imageCard}
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
         />
+        <div className={css.movieDescription}>
+          <h2>{movie.title}</h2>
+          <p>Release Date: {movie.release_date}</p>
+          <p>User Score: {movie.vote_average}</p>
+          <b>Overview</b>
+          <p>{movie.overview}</p>
+          <b>Genres</b>
+          <p>
+            {movie.genres.map(genre => genre.name).join(', ')}
+          </p>
+          
+        </div>
       </div>
-      <h2>{movie.title}</h2>
-      <p>{movie.overview}</p>
-      <p>Release Date: {movie.release_date}</p>
-      <p>Vote Average: {movie.vote_average}</p>
-      <ul>
+      <b>Additional information</b>
+      <ul className={css.subpagesList}>
         <li>
           <Link to="cast">Cast</Link>
         </li>
@@ -61,8 +72,9 @@ const MovieDetails = () => {
       <Suspense fallback={<div>Loading subpage...</div>}>
         <Outlet />
       </Suspense>
-      
     </div>
   );
 };
+
+
 export default MovieDetails;
