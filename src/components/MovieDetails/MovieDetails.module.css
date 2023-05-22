@@ -7,8 +7,18 @@
   display: flex;
   margin-top: 10px;
   margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .movieDescription {
   margin-left: 10px;
+}
+
+.subpagesList {
+  border-bottom: 1px solid #ccc;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 0;
 }
