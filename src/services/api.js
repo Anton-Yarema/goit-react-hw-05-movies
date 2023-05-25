@@ -16,7 +16,7 @@ export const getMovies = async () => {
 export const getSearchMovies = async searchQuery => {
   try {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchQuery}&language=en-US`
+      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchQuery}`
     );
     return response.data.results;
   } catch (error) {

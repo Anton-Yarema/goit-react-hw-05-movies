@@ -31,10 +31,7 @@ const Cast = () => {
     <div>
       <h3>Cast:</h3>
       {loading && <Loader />}
-      {error && <p>{error}</p>}
-      {cast.length === 0 ? (
-        <p>No cast information available.</p>
-      ) : (
+      {cast.length > 0 && !error && (
         <ul>
           {cast.map(actor => (
             <li key={actor.id}>
@@ -53,6 +50,10 @@ const Cast = () => {
           ))}
         </ul>
       )}
+      {cast.length === 0 && !error && !loading && (
+        <p>No cast information available.</p>
+      )}
+      {error && <p>No cast information available.</p>}
     </div>
   );
 };

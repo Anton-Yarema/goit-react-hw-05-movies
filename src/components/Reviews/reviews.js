@@ -29,10 +29,7 @@ const Reviews = () => {
     <div>
       <h3>Reviews:</h3>
       {loading && <Loader />}
-      {error && <p>{error}</p>}
-      {reviews.length === 0 ? (
-        <p>No cast information available.</p>
-      ) : (
+      {reviews.length > 0 && !error && (
         <ul>
           {reviews.map(review => (
             <li key={review.id}>
@@ -42,9 +39,13 @@ const Reviews = () => {
           ))}
         </ul>
       )}
+      {reviews.length === 0 && !error && !loading && (
+        <p>No reviews information available.</p>
+      )}
+
+      {error && <p>No reviews information available.</p>}
     </div>
   );
 };
-
 
 export default Reviews;

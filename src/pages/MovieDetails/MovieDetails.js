@@ -5,6 +5,7 @@ import Loader from 'components/Loader';
 import { getMoviesDetails } from '../../services/api';
 
 import NoImage from '../../components/image/No_image_available.svg';
+import NotFound from 'components/NotFound/notFound';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -24,9 +25,10 @@ const MovieDetails = () => {
     try {
       setLoading(true);
       const response = await getMoviesDetails(movieId);
+      if (response.length === 0) return;
       setMovie(response);
     } catch (error) {
-      setError('Something went wrong.');
+      setError(error);
     } finally {
       setLoading(false);
     }
@@ -34,34 +36,33 @@ const MovieDetails = () => {
 
   return (
     <div>
-      {loading ? (
-        <Loader />
-      ) : (
+      <Link to={backLinkLocationRef.current} className={css.goBackButton}>
+        Go back
+      </Link>
+      {loading && <Loader />}
+      {error && <NotFound />}
+      {movie && (
         <div className={css.movieDetails}>
-          <Link to={backLinkLocationRef.current}>Go back</Link>
-          {error && <div>{error}</div>}
-          {movie && (
-            <div className={css.movieContent}>
-              <img
-                className={css.imageCard}
-                src={
-                  movie.poster_path
-                    ? `https://image.tmdb.org/t/p/w200/${movie.poster_path}`
-                    : NoImage
-                }
-                alt={movie.title}
-              />
-              <div className={css.movieDescription}>
-                <h2>{movie.title}</h2>
-                <p>Release Date: {movie.release_date}</p>
-                <p>User Score: {movie.vote_average}</p>
-                <b>Overview</b>
-                <p>{movie.overview}</p>
-                <b>Genres</b>
-                <p>{movie.genres.map(genre => genre.name).join(', ')}</p>
-              </div>
+          <div className={css.movieContent}>
+            <img
+              className={css.imageCard}
+              src={
+                movie.poster_path
+                  ? `https://image.tmdb.org/t/p/w200/${movie.poster_path}`
+                  : NoImage
+              }
+              alt={movie.title}
+            />
+            <div className={css.movieDescription}>
+              <h2>{movie.title}</h2>
+              <p>Release Date: {movie.release_date}</p>
+              <p>User Score: {movie.vote_average}</p>
+              <b>Overview</b>
+              <p>{movie.overview}</p>
+              <b>Genres</b>
+              <p>{movie.genres.map(genre => genre.name).join(', ')}</p>
             </div>
-          )}
+          </div>
           <b>Additional information</b>
           <ul className={css.subpagesList}>
             <li>
@@ -71,7 +72,7 @@ const MovieDetails = () => {
               <Link to="reviews">Reviews</Link>
             </li>
           </ul>
-          <Suspense fallback={<div>Loading subpage...</div>}>
+          <Suspense fallback={<Loader />}>
             <Outlet />
           </Suspense>
         </div>

@@ -3,6 +3,9 @@ import { useSearchParams } from 'react-router-dom';
 import Loader from 'components/Loader/';
 import MoviesList from 'components/MoviesList/MoviesList';
 import { getSearchMovies } from '../../services/api';
+import SearchBar from 'components/SearchBar';
+import NotFound from 'components/NotFound/notFound';
+
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -26,8 +29,8 @@ const Movies = () => {
       const response = await getSearchMovies(searchQuery);
       setMovies(response);
     } catch (error) {
-      console.log(error);
-      setError('Something went wrong. Try later...');
+      console.log(error);    
+      setError('Something went wrong. Try later...');    
     } finally {
       setLoading(false);
     }
@@ -40,7 +43,6 @@ const Movies = () => {
       return;
     }
     setSearchParams({ query: value.trim() });
-    console.log({ query: value.trim() });
   };
 
   const updateQueryString = evt => {
@@ -49,27 +51,18 @@ const Movies = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <button type="submit">Search</button>
-        <div>
-          <input
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search movies"
-            name={value}
-            onChange={updateQueryString}
-          />
-        </div>
-      </form>
-
+      <SearchBar
+        handleSubmit={handleSubmit}
+        updateQueryString={updateQueryString}
+        value={value}
+      />
       {loading ? (
         <Loader />
       ) : (
         <div>
           {loading && <Loader />}
           {movies && <MoviesList movies={movies} />}
-          {error && <p>Something went wrong. Try later</p>}
+          {error && <NotFound />}
         </div>
       )}
     </div>

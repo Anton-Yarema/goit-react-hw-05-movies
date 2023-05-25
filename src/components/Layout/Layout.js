@@ -2,6 +2,8 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
 import css from './Layout.module.css';
 import styled from 'styled-components';
+import Loader from 'components/Loader/loader';
+import Container from 'components/Container/container';
 
 const StyledLink = styled(NavLink)`
   color: black;
@@ -13,7 +15,7 @@ const StyledLink = styled(NavLink)`
 
 const Layout = () => {
   return (
-    <div>
+    <Container>
       <header>
         <ul className={css.navList}>
           <li>
@@ -27,11 +29,11 @@ const Layout = () => {
         </ul>
       </header>
       <main>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
       </main>
-    </div>
+    </Container>
   );
 };
 

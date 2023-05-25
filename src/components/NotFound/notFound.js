@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
+import css from './notFound.module.css'
 
-export const NotFound = () => {
+const NotFound = () => {
   const navigate = useNavigate();
 
   const handleNavigateHome = () => {
@@ -10,8 +11,10 @@ export const NotFound = () => {
   return (
     <div>
       <h2>404 - Сторінку не знайдено</h2>
-      <p>Перейти на сторінку Home.</p>
-      <button onClick={handleNavigateHome}>Перейти на головну</button>
+      <p>Ви можете повернутись на головну сторінку</p>
+      <button className={css.goBackButton} onClick={handleNavigateHome}>Перейти на головну</button>
     </div>
   );
 };
+
+export default NotFound;
