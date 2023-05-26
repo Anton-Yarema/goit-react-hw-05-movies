@@ -36,13 +36,13 @@ const MovieDetails = () => {
 
   return (
     <div>
-      <Link to={backLinkLocationRef.current} className={css.goBackButton}>
-        Go back
-      </Link>
       {loading && <Loader />}
       {error && <NotFound />}
       {movie && (
         <div className={css.movieDetails}>
+          <Link to={backLinkLocationRef.current} className={css.goBackButton}>
+            Go back
+          </Link>
           <div className={css.movieContent}>
             <img
               className={css.imageCard}

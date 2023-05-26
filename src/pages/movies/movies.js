@@ -4,15 +4,13 @@ import Loader from 'components/Loader/';
 import MoviesList from 'components/MoviesList/MoviesList';
 import { getSearchMovies } from '../../services/api';
 import SearchBar from 'components/SearchBar';
-import NotFound from 'components/NotFound/notFound';
-
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [value, setValue] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
 
   const searchQuery = searchParams.get('query') ?? '';
 
@@ -27,10 +25,14 @@ const Movies = () => {
     try {
       setLoading(true);
       const response = await getSearchMovies(searchQuery);
+      if (response.length === 0) {
+        setError(true);
+        return;
+      }
       setMovies(response);
     } catch (error) {
-      console.log(error);    
-      setError('Something went wrong. Try later...');    
+      console.log(error);
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -56,13 +58,13 @@ const Movies = () => {
         updateQueryString={updateQueryString}
         value={value}
       />
+      {error && <p>There is no movies with this request. Please, try again</p>}
       {loading ? (
         <Loader />
       ) : (
         <div>
           {loading && <Loader />}
           {movies && <MoviesList movies={movies} />}
-          {error && <NotFound />}
         </div>
       )}
     </div>
