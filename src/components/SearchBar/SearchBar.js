@@ -1,6 +1,7 @@
 import React from 'react';
 import css from './SearchBar.module.css';
 import { ImSearch } from 'react-icons/im';
+import PropTypes from 'prop-types';
 
 const SearchBar = ({ handleSubmit, updateQueryString, value }) => {
   return (
@@ -10,7 +11,7 @@ const SearchBar = ({ handleSubmit, updateQueryString, value }) => {
           className={css.inputSearch}
           type="text"
           autoComplete="off"
-          autoFocus           
+          autoFocus
           placeholder="Search movies"
           name={value}
           onChange={updateQueryString}
@@ -21,6 +22,12 @@ const SearchBar = ({ handleSubmit, updateQueryString, value }) => {
       </button>
     </form>
   );
+};
+
+SearchBar.propTypes = {
+  handleSubmit: PropTypes.func,
+  updateQueryString: PropTypes.func,
+  value: PropTypes.string,
 };
 
 export default SearchBar;
